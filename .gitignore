@@ -1,0 +1,6 @@
+# common ignores
+.DS_Store
+.buildpath
+.project
+.settings
+.idea
