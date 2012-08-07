@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author     Guidance Team
+ * @category   Guidance
+ * @package    Cachebuster
+ * @copyright  Copyright (c) 2012 Guidance Solutions (http://www.guidance.com)
+ */
+ -->
+<config>
+    <modules>
+        <Guidance_Cachebuster>
+            <version>0.1.0</version>
+        </Guidance_Cachebuster>
+    </modules>
+    <global>
+        <helpers>
+            <guidance_cachebuster>
+                <class>Guidance_Cachebuster_Helper</class>
+            </guidance_cachebuster>
+        </helpers>
+        <models>
+            <guidance_cachebuster>
+                <class>Guidance_Cachebuster_Model</class>
+            </guidance_cachebuster>
+        </models>
+        <events>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <guidance_cachebuster>
+                        <type>singleton</type>
+                        <class>guidance_cachebuster/observer</class>
+                        <method>core_block_abstract_to_html_after</method>
+                    </guidance_cachebuster>
+                </observers>
+            </core_block_abstract_to_html_after>
+            <controller_action_postdispatch>
+                <observers>
+                    <guidance_cachebuster>
+                        <type>singleton</type>
+                        <class>guidance_cachebuster/observer</class>
+                        <method>controller_action_postdispatch</method>
+                    </guidance_cachebuster>
+                </observers>
+            </controller_action_postdispatch>
+        </events>
+    </global>
+</config>
