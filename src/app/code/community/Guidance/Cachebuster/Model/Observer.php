@@ -12,6 +12,27 @@ class Guidance_Cachebuster_Model_Observer
     /** @var array */
     protected $_find = array();
 
+    /** @var array */
+    protected $_baseUrls = array();
+
+    /** @var array */
+    protected $_baseDirs = array();
+
+    public function __construct()
+    {
+        $this->_baseUrls = array(
+            Mage_Core_Model_Store::URL_TYPE_JS    => Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS),
+            Mage_Core_Model_Store::URL_TYPE_MEDIA => Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA),
+            Mage_Core_Model_Store::URL_TYPE_SKIN  => Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN),
+        );
+
+        $this->_baseDirs = array(
+            Mage_Core_Model_Store::URL_TYPE_JS    => Mage::getBaseDir() . '/js/',
+            Mage_Core_Model_Store::URL_TYPE_MEDIA => Mage::getBaseDir() . '/media/',
+            Mage_Core_Model_Store::URL_TYPE_SKIN  => Mage::getBaseDir() . '/skin/',
+        );
+    }
+
     /**
      * Parse html from all rendered blocks for links to be replaced
      *
@@ -27,31 +48,31 @@ class Guidance_Cachebuster_Model_Observer
 
         // Loop all urls
         foreach ($urls as $url) {
-            if (strpos($url, Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)) !== FALSE) {
+            if (strpos($url, $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_JS]) !== FALSE) {
                 $this->_addUrlToProcess(
                     $url,
                     $this->_addTimestampToUrl(
                         $url,
-                        Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS),
-                        Mage::getBaseDir() . '/js/'
+                        $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_JS],
+                        $this->_baseDirs[Mage_Core_Model_Store::URL_TYPE_JS]
                     )
                 );
-            } elseif (strpos($url, Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)) !== FALSE) {
+            } elseif (strpos($url, $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_MEDIA]) !== FALSE) {
                 $this->_addUrlToProcess(
                     $url,
                     $this->_addTimestampToUrl(
                         $url,
-                        Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA),
-                        Mage::getBaseDir() . '/media/'
+                        $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_MEDIA],
+                        $this->_baseDirs[Mage_Core_Model_Store::URL_TYPE_MEDIA]
                     )
                 );
-            } elseif (strpos($url, Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)) !== FALSE) {
+            } elseif (strpos($url, $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_SKIN]) !== FALSE) {
                 $this->_addUrlToProcess(
                     $url,
                     $this->_addTimestampToUrl(
                         $url,
-                        Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN),
-                        Mage::getBaseDir() . '/skin/'
+                        $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_SKIN],
+                        $this->_baseDirs[Mage_Core_Model_Store::URL_TYPE_SKIN]
                     )
                 );
             }
