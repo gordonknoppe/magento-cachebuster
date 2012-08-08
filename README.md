@@ -24,7 +24,6 @@ Adds timestamps to URLs for automatic cache busting based on unique URI:
 
 ## Todo
 
-* Apply timestamp to valid list of extensions (possibly via config)
 * Test with transactional emails
 
 ## Rewrite Configuration
