@@ -18,12 +18,19 @@ class Guidance_Cachebuster_Model_Observer
     /** @var array */
     protected $_baseDirs = array();
 
+    /** @var array */
+    protected $_enabledFileExtensions = array();
+
     /** @var bool */
     protected $_isEnabled = false;
 
     public function __construct()
     {
-        $this->_isEnabled = Mage::helper('guidance_cachebuster')->isEnabled();
+        /** @var $helper Guidance_Cachebuster_Helper_Data */
+        $helper = Mage::helper('guidance_cachebuster');
+
+        $this->_isEnabled = $helper->isEnabled();
+        $this->_enabledFileExtensions = $helper->enabledFileExtensions();
 
         $this->_baseUrls = array(
             Mage_Core_Model_Store::URL_TYPE_JS    => Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS),
@@ -148,6 +155,7 @@ REGEX;
         $pathinfo = pathinfo($path);
 
         if (empty($pathinfo['extension']) || empty($pathinfo['filename']) || empty($pathinfo['basename'])
+            || !in_array($pathinfo['extension'], $this->_enabledFileExtensions)
             || !file_exists($path)
         ) {
             return $url;
