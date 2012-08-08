@@ -22,6 +22,11 @@ Adds timestamps to URLs for automatic cache busting based on unique URI:
 
 * todo
 
+## Todo
+
+* Apply timestamp to valid list of extensions (possibly via config)
+* Test with transactional emails
+
 ## Rewrite Configuration
 
 The following rewrite rules need to be enabled for your store when using this module either via .htaccess file or

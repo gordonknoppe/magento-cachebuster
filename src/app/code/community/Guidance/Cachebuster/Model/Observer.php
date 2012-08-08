@@ -18,8 +18,13 @@ class Guidance_Cachebuster_Model_Observer
     /** @var array */
     protected $_baseDirs = array();
 
+    /** @var bool */
+    protected $_isEnabled = false;
+
     public function __construct()
     {
+        $this->_isEnabled = Mage::helper('guidance_cachebuster')->isEnabled();
+
         $this->_baseUrls = array(
             Mage_Core_Model_Store::URL_TYPE_JS    => Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS),
             Mage_Core_Model_Store::URL_TYPE_MEDIA => Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA),
@@ -40,6 +45,9 @@ class Guidance_Cachebuster_Model_Observer
      */
     public function core_block_abstract_to_html_after(Varien_Event_Observer $observer)
     {
+        if (!$this->_isEnabled) {
+            return;
+        }
         $transport = $observer->getEvent()->getTransport();
         $html      = $transport->getHtml();
 
@@ -86,6 +94,9 @@ class Guidance_Cachebuster_Model_Observer
      */
     public function controller_action_postdispatch(Varien_Event_Observer $observer)
     {
+        if (!$this->_isEnabled) {
+            return;
+        }
         if (count($this->_find)) {
             $response = $observer->getControllerAction()->getResponse();
             $body = $response->getBody();

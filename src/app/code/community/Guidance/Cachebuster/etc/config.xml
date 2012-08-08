@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
- * @author     Guidance Team
+ * @author     Gordon Knoppe
  * @category   Guidance
  * @package    Cachebuster
  * @copyright  Copyright (c) 2012 Guidance Solutions (http://www.guidance.com)
@@ -45,4 +45,11 @@
             </controller_action_postdispatch>
         </events>
     </global>
+    <default>
+        <system>
+            <guidance_cachebuster>
+                <is_enabled>0</is_enabled>
+            </guidance_cachebuster>
+        </system>
+    </default>
 </config>
