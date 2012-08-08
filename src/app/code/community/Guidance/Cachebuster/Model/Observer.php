@@ -61,35 +61,19 @@ class Guidance_Cachebuster_Model_Observer
         // Find all urls in html
         $urls = $this->_scrapeUrls($html);
 
-        // Loop all urls
         foreach ($urls as $url) {
-            if (strpos($url, $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_JS]) !== FALSE) {
-                $this->_addUrlToProcess(
-                    $url,
-                    $this->_addTimestampToUrl(
+            foreach (array_keys($this->_baseUrls) as $type) {
+                if (strpos($url, $this->_baseUrls[$type]) !== FALSE) {
+                    $this->_addUrlToProcess(
                         $url,
-                        $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_JS],
-                        $this->_baseDirs[Mage_Core_Model_Store::URL_TYPE_JS]
-                    )
-                );
-            } elseif (strpos($url, $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_MEDIA]) !== FALSE) {
-                $this->_addUrlToProcess(
-                    $url,
-                    $this->_addTimestampToUrl(
-                        $url,
-                        $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_MEDIA],
-                        $this->_baseDirs[Mage_Core_Model_Store::URL_TYPE_MEDIA]
-                    )
-                );
-            } elseif (strpos($url, $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_SKIN]) !== FALSE) {
-                $this->_addUrlToProcess(
-                    $url,
-                    $this->_addTimestampToUrl(
-                        $url,
-                        $this->_baseUrls[Mage_Core_Model_Store::URL_TYPE_SKIN],
-                        $this->_baseDirs[Mage_Core_Model_Store::URL_TYPE_SKIN]
-                    )
-                );
+                        $this->_addTimestampToUrl(
+                            $url,
+                            $this->_baseUrls[$type],
+                            $this->_baseDirs[$type]
+                        )
+                    );
+                    continue;
+                }
             }
         }
     }
