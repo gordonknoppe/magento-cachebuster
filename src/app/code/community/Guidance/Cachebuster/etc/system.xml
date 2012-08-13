@@ -36,7 +36,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <comment>List of file extensions to add cachebusting timestamps to, comma-separated
-                                (ex: js,css,png,jpg,gif)</comment>
+                                (ex: js,css,png,jpg,gif).  This should match the file extensions declared in your .htaccess file</comment>
                         </file_extensions>
                     </fields>
                 </guidance_cachebuster>
