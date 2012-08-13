@@ -20,7 +20,15 @@ Adds timestamps to URLs for automatic cache busting based on unique URI:
 
 ## Installation
 
-* todo
+* Copy module files into your application
+* Configure apache with the rewrite rules necessary for resolving the new filenames
+* Enable the module in the Magento admin
+
+## Configuration
+
+* See config group System > Configuration || System > Magento Cachebuster
+* Enable the module behavior
+* File extensions: This configuration determines what files get the timestamp applied
 
 ## Todo
 
