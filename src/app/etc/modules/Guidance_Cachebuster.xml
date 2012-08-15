@@ -1,4 +1,12 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * @author     Gordon Knoppe
+ * @category   Guidance
+ * @package    Cachebuster
+ * @copyright  Copyright (c) 2012 Guidance Solutions (http://www.guidance.com)
+ */
+ -->
 <config>
     <modules>
         <Guidance_Cachebuster>
