@@ -33,14 +33,14 @@ The module provides cachebusting by automatically altering the URI created by Ma
 
 ## Configuration
 
-**Attention** These settings should be set on the website scope to prevent issues with some functionality in the admin panel not working.
-
-This module is configured via the "System" configuration section under the group "Cachebuster Settings". 
+This module is configured via the "System" configuration section under the group "Cachebuster Settings".
 
 * **Enable cachebuster**
   * Enables the module behavior which rewrites URLs on the frontend.  It is important that your mod_rewrite rules are configured before enabling this setting.
 * **File extensions**
   * Comma-separated list of file extensions which will be rewritten with timestamp applied.  Extensions configured here must be defined in your rewrite rule. 
+
+**Note:** Behavior only takes affect on the frontend, admin area static file urls are not processed
 
 ## mod_rewrite configuration
 
