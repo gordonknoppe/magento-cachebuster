@@ -3,20 +3,27 @@ Magento Cachebuster
 
 Cachebuster is a Magento module which facilitates automatic purging of static assets from HTTP caches such as browser cache, CDN, Varnish, etc using best practices outlined within the HTML5 boilerplate community.
 
-https://github.com/h5bp/html5-boilerplate/wiki/cachebusting
+See https://github.com/h5bp/html5-boilerplate/wiki/cachebusting
 
 URLs affected:
 
-* JS 
-* Media
-* Skin
+* /js/ 
+* /media/
+* /skin/
 
 ## Overview
 
-The module provides cachebusting by automatically altering the URI created by Magento for a static file by adding the timestamp of the file (filemtime()):
+The module provides cachebusting by automatically altering the URI created by Magento for static files by adding the timestamp of the file to the filename:
 
 * Before: http://www.example.com/js/varien/js.js
 * After:  http://www.example.com/js/varien/js.1324429472.js
+
+## Example uses
+
+* Automatically invalidating cache when using Cloudfront CDN (see http://www.aschroder.com/2011/05/magento-and-amazons-cloudfront-cdn-the-easy-way/ for a great how-to)
+  * Amazon's Cloudfront CDN can be configured to use an origin server but by it's nature will not refresh your updated file until it's cache time expires or you send an invalidation request using their API.  
+* No more browser cache issues (ie. Them: "Where's that CSS change I requested?".  You: "Oh, did you hit refresh?")
+  * Magento's default .htaccess file using far-future expires headers which is good for reducing the number of requests to your server but also means that even without a CDN you have probably experienced browser cache causing annoying wastes of time on non-issues.
 
 ## Installation
 
@@ -50,16 +57,4 @@ The following mod_rewrite rules need to be enabled for your store when using thi
 
 ## License
 
-    Copyright 2012 Guidance Solutions, Inc.
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+Licensed under the Apache License, Version 2.0
