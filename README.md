@@ -44,7 +44,7 @@ This module is configured via the "System" configuration section under the group
 
 ## mod_rewrite configuration
 
-The following mod_rewrite rules need to be enabled for your store when using this module, potentially via .htaccess file or Virtualhost definition.
+The following mod_rewrite rules need to be enabled for your store when using this module, potentially via `.htaccess` file or Virtualhost definition.  
 
     <IfModule mod_rewrite.c>
 
@@ -56,6 +56,10 @@ The following mod_rewrite rules need to be enabled for your store when using thi
         RewriteRule ^(.+)\.(\d+)\.(js|css|png|jpg|gif)$ $1.$3 [L]
 
     </IfModule>
+
+If you are using the default media `.htaccess` file which routes missing URLs through Magento's `get.php` for downloadable products you will also need to add these rules to your `.htaccess` file in the `/media/` directory.
+
+**Note:** This rewrite condition in the media directory will break the protection provided by downloadable products for the extensions listed.  If your store sells downloadable products with one of the above extensions you will likely need to tweak these conditions.
 
 ## License
 
