@@ -23,7 +23,7 @@ The module provides cachebusting by automatically altering the URI created by Ma
 * Automatically invalidating cache when using Cloudfront CDN (see http://www.aschroder.com/2011/05/magento-and-amazons-cloudfront-cdn-the-easy-way/ for a great how-to)
   * Amazon's Cloudfront CDN can be configured to use an origin server but by it's nature will not refresh your updated file until it's cache time expires or you send an invalidation request using their API.  
 * No more browser cache issues (ie. Them: "Where's that CSS change I requested?".  You: "Oh, did you hit refresh?")
-  * Magento's default .htaccess file uses far-future expires headers, which is good for reducing the number of requests to your server, but also means that even without a CDN you have probably experienced browser cache cauing a waste of time on what turns out to be a non-issues.
+  * Magento's default .htaccess file uses far-future expires headers, which is good for reducing the number of requests to your server, but also means that even without a CDN you have probably experienced browser cache causing a waste of time on what turns out to be a non-issues.
 
 ## Installation
 
