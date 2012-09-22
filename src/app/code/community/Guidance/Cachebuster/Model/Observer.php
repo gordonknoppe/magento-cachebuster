@@ -29,6 +29,9 @@ class Guidance_Cachebuster_Model_Observer
     protected $_find = array();
 
     /** @var array */
+    protected $_processed = array();
+
+    /** @var array */
     protected $_baseUrls = array();
 
     /** @var array */
@@ -78,6 +81,10 @@ class Guidance_Cachebuster_Model_Observer
         $urls = $this->_scrapeUrls($html);
 
         foreach ($urls as $url) {
+            // Skip this url if it has already been processed
+            if (isset($this->_processed[$url])) {
+                continue;
+            }
             foreach (array_keys($this->_baseUrls) as $type) {
                 if (strpos($url, $this->_baseUrls[$type]) !== FALSE) {
                     $this->_addUrlToProcess(
@@ -192,6 +199,7 @@ REGEX;
     {
         if ($find != $replace) {
             $this->_find[$find] = $replace;
+            $this->_processed[$replace] = true;
         }
         return $this;
     }
