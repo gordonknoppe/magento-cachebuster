@@ -3,7 +3,7 @@ Magento Cachebuster
 
 Cachebuster is a Magento module which facilitates automatic purging of static assets from HTTP caches such as browser cache, CDN, Varnish, etc using best practices outlined within the HTML5 boilerplate community.
 
-See https://github.com/h5bp/html5-boilerplate/wiki/cachebusting
+See https://github.com/h5bp/html5-boilerplate/blob/master/doc/htaccess.md#cache-busting
 
 URLs affected:
 
