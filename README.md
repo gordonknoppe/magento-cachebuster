@@ -57,6 +57,12 @@ The following mod_rewrite rules need to be enabled for your store when using thi
 
     </IfModule>
 
+For nginx you will need to add a rule like the following to your site definition.
+
+    location ~* (.+)\.(\d+)\.(js|css|png|jpg|jpeg|gif)$ {
+        try_files $uri $1.$3;
+    }
+
 If you are using the default media `.htaccess` file which routes missing URLs through Magento's `get.php` for downloadable products you will also need to add these rules to your `.htaccess` file in the `/media/` directory.
 
 **Note:** This rewrite condition in the media directory will break the protection provided by downloadable products for the extensions listed.  If your store sells downloadable products with one of the above extensions you will likely need to tweak these conditions.
