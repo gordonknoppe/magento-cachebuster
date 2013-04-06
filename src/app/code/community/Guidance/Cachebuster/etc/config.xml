@@ -52,15 +52,6 @@
     </default>
     <frontend>
         <events>
-            <core_block_abstract_to_html_after>
-                <observers>
-                    <guidance_cachebuster>
-                        <type>singleton</type>
-                        <class>guidance_cachebuster/observer</class>
-                        <method>core_block_abstract_to_html_after</method>
-                    </guidance_cachebuster>
-                </observers>
-            </core_block_abstract_to_html_after>
             <controller_action_postdispatch>
                 <observers>
                     <guidance_cachebuster>

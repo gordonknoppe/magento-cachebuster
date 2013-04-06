@@ -65,18 +65,12 @@ class Guidance_Cachebuster_Model_Observer
     }
 
     /**
-     * Parse html from all rendered blocks for links to be replaced
+     * Parse given html
      *
-     * @param Varien_Event_Observer $observer
+     * @param string $html 
      */
-    public function core_block_abstract_to_html_after(Varien_Event_Observer $observer)
+    public function parseHtml($html = '')
     {
-        if (!$this->_isEnabled) {
-            return;
-        }
-        $transport = $observer->getEvent()->getTransport();
-        $html      = $transport->getHtml();
-
         // Find all urls in html
         $urls = $this->_scrapeUrls($html);
 
@@ -111,9 +105,10 @@ class Guidance_Cachebuster_Model_Observer
         if (!$this->_isEnabled) {
             return;
         }
+        $response = $observer->getControllerAction()->getResponse();
+        $body = $response->getBody();
+        $this->parseHtml($body);
         if (count($this->_find)) {
-            $response = $observer->getControllerAction()->getResponse();
-            $body = $response->getBody();
             $body = str_replace(array_keys($this->_find), array_values($this->_find), $body);
             $response->setBody($body);
         }
