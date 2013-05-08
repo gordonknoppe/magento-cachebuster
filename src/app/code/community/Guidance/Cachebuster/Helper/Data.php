@@ -45,4 +45,24 @@ class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
         return $this->_fileExtensions;
     }
 
+    /**
+     * @return Guidance_Cachebuster_Model_Parser
+     */
+    public function getParser()
+    {
+        $urlMap = array(
+            Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)    => Mage::getBaseDir() . '/js/',
+            Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) => Mage::getBaseDir() . '/media/',
+            Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)  => Mage::getBaseDir() . '/skin/',
+        );
+
+        /** @var Guidance_Cachebuster_Model_Parser $parser */
+        $config = array(
+            'urlMap'         => $urlMap,
+            'fileExtensions' => $this->enabledFileExtensions()
+        );
+        $parser = Mage::getModel('guidance_cachebuster/parser', $config);
+        return $parser;
+    }
+
 }
