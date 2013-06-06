@@ -28,6 +28,7 @@ class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
 
     const XML_PATH_IS_ENABLED = 'system/guidance_cachebuster/is_enabled';
     const XML_PATH_FILE_EXTENSIONS = 'system/guidance_cachebuster/file_extensions';
+    const XML_PATH_FILE_URL_KEYS = 'system/guidance_cachebuster/url_keys';
 
     protected $_fileExtensions;
 
@@ -50,11 +51,17 @@ class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
      */
     public function getParser()
     {
-        $urlMap = array(
-            Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)    => Mage::getBaseDir() . '/js/',
-            Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) => Mage::getBaseDir() . '/media/',
-            Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)  => Mage::getBaseDir() . '/skin/',
-        );
+        $urlKeys= $this->_getUrlKeys();
+        $urlMap = array();
+
+        if (!empty($urlKeys)) {
+
+            $urlKeys = explode(',', $urlKeys);
+
+            foreach ($urlKeys as $urlKey) {
+                $urlMap[Mage::getBaseUrl($urlKey)] = Mage::getBaseDir() . '/' . $urlKey . '/';
+            }
+        }
 
         /** @var Guidance_Cachebuster_Model_Parser $parser */
         $config = array(
@@ -63,6 +70,12 @@ class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
         );
         $parser = Mage::getModel('guidance_cachebuster/parser', $config);
         return $parser;
+    }
+
+    protected function _getUrlKeys()
+    {
+        $urls = Mage::getStoreConfig(self::XML_PATH_FILE_URL_KEYS);
+        return $urls;
     }
 
 }
