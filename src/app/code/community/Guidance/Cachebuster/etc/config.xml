@@ -46,6 +46,7 @@
         <system>
             <guidance_cachebuster>
                 <is_enabled>0</is_enabled>
+                <url_keys>js,media,skin</url_keys>
                 <file_extensions>js,css,png,jpeg,jpg,gif</file_extensions>
             </guidance_cachebuster>
         </system>
