@@ -18,6 +18,8 @@ The module provides cachebusting by automatically altering the URI created by Ma
 * Before: http://www.example.com/js/varien/js.js
 * After:  http://www.example.com/js/varien/js.1324429472.js
 
+**Note:** Behavior only takes affect on the frontend, admin area static file urls are not processed
+
 ## Example uses
 
 * Automatically invalidating cache when using Cloudfront CDN (see http://www.aschroder.com/2011/05/magento-and-amazons-cloudfront-cdn-the-easy-way/ for a great how-to)
@@ -47,8 +49,6 @@ This module is configured via the "System" configuration section under the group
     * Sha1 numeric - Signs the file by getting the sha1 hash of the file and then extracting only the numbers from the checksum (to remain compatible with the published rewrite rules)
 * **Enable profiling**
   * Adds X-Cachebuster-Time header to the response
-
-**Note:** Behavior only takes affect on the frontend, admin area static file urls are not processed
 
 ## mod_rewrite configuration
 
