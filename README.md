@@ -37,8 +37,16 @@ This module is configured via the "System" configuration section under the group
 
 * **Enable cachebuster**
   * Enables the module behavior which rewrites URLs on the frontend.  It is important that your mod_rewrite rules are configured before enabling this setting.
+* **URL map**
+  * Configure which types of URLs will have the signature added to the filename.
 * **File extensions**
-  * Comma-separated list of file extensions which will be rewritten with timestamp applied.  Extensions configured here must be defined in your rewrite rule. 
+  * Comma-separated list of file extensions which will be rewritten with signature applied.  Extensions configured here must be defined in your rewrite rule. 
+* **Signature**
+  * Mechanism to use to determine the signature added to the URL
+    * Timestamp - Signs the file using the unix timestamp last-modified time of the file
+    * Sha1 numeric - Signs the file by getting the sha1 hash of the file and then extracting only the numbers from the checksum (to remain compatible with the published rewrite rules)
+* **Enable profiling**
+  * Adds X-Cachebuster-Time header to the response
 
 **Note:** Behavior only takes affect on the frontend, admin area static file urls are not processed
 
