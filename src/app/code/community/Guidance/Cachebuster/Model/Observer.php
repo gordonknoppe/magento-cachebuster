@@ -37,9 +37,19 @@ class Guidance_Cachebuster_Model_Observer
         if (!$helper->isEnabled()) {
             return;
         }
+
+        /** @var Guidance_Cachebuster_Model_Parser $parser */
         $parser   = $helper->getParser();
-        $response = $observer->getControllerAction()->getResponse();
+
+        /** @var Mage_Core_Controller_Response_Http $response */
+        $response = $observer->getData('controller_action')->getResponse();
+        $startTime = microtime(true);
         $body     = $parser->parseHtml($response->getBody());
+        if ($helper->isProfilingEnabled()) {
+            $endTime = microtime(true);
+            $renderTime = $endTime - $startTime;
+            $response->setHeader('X-Cachebuster-Time', $renderTime);
+        }
         $response->setBody($body);
     }
 }

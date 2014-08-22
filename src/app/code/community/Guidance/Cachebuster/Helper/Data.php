@@ -26,9 +26,14 @@
 class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
 {
 
+    const SIGNATURE_TIMESTAMP = 'timestamp';
+    const SIGNATURE_SHA1_NUMERIC = 'sha1numeric';
+
     const XML_PATH_IS_ENABLED = 'system/guidance_cachebuster/is_enabled';
     const XML_PATH_FILE_EXTENSIONS = 'system/guidance_cachebuster/file_extensions';
     const XML_PATH_FILE_URL_KEYS = 'system/guidance_cachebuster/url_keys';
+    const XML_PATH_SIGNATURE = 'system/guidance_cachebuster/signature';
+    const XML_PATH_PROFILE_ENABLED = 'system/guidance_cachebuster/profile';
 
     protected $_fileExtensions;
 
@@ -66,8 +71,15 @@ class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
         /** @var Guidance_Cachebuster_Model_Parser $parser */
         $config = array(
             'urlMap'         => $urlMap,
-            'fileExtensions' => $this->enabledFileExtensions()
+            'fileExtensions' => $this->enabledFileExtensions(),
         );
+
+        $signature = $this->_getSignatureType();
+        if ($signature == self::SIGNATURE_SHA1_NUMERIC) {
+            $config['callback'] = function($path) {
+                return filter_var(sha1_file($path), FILTER_SANITIZE_NUMBER_INT);
+            };
+        }
         $parser = Mage::getModel('guidance_cachebuster/parser', $config);
         return $parser;
     }
@@ -78,4 +90,14 @@ class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
         return $urls;
     }
 
+    protected function _getSignatureType()
+    {
+        $signature = Mage::getStoreConfig(self::XML_PATH_SIGNATURE);
+        return $signature;
+    }
+
+    public function isProfilingEnabled()
+    {
+        return Mage::getStoreConfig(self::XML_PATH_PROFILE_ENABLED);
+    }
 }

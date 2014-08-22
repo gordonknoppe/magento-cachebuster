@@ -14,6 +14,9 @@ class Guidance_Cachebuster_Model_Parser
     /** @var array  */
     protected $_fileExtensions = array();
 
+    /** @var  callable */
+    protected $_callback;
+
     public function __construct($config = array())
     {
         if (isset($config['urlMap'])) {
@@ -21,6 +24,9 @@ class Guidance_Cachebuster_Model_Parser
         }
         if (isset($config['fileExtensions'])) {
             $this->setFileExtensions($config['fileExtensions']);
+        }
+        if (isset($config['callback'])) {
+            $this->setCallback($config['callback']);
         }
     }
 
@@ -33,7 +39,7 @@ class Guidance_Cachebuster_Model_Parser
     {
         $find = $processed = array();
 
-        // Get urls to add timestamps to by map type
+        // Get urls to add signature to by map type
         $urls = $this->_parseUrls($html);
 
         foreach ($urls as $urlKey => $foundUrls) {
@@ -47,10 +53,10 @@ class Guidance_Cachebuster_Model_Parser
                     continue;
                 }
 
-                $timeStampedUrl = $this->_addTimestampToUrl($url, $urlKey, $path);
+                $signedUrl = $this->_addSignatureToUrl($url, $urlKey, $path);
 
-                if ($url != $timeStampedUrl) {
-                    $find[$url] = $timeStampedUrl;
+                if ($url != $signedUrl) {
+                    $find[$url] = $signedUrl;
                     $processed[$url] = true;
                 }
             }
@@ -66,14 +72,14 @@ class Guidance_Cachebuster_Model_Parser
     }
 
     /**
-     * Add timestamp to the filename portion of URL using $basePath to determine timestamp for URL
+     * Add signature to the filename portion of URL using $basePath to determine signature for URL
      *
      * @param $url
      * @param $baseUrl
      * @param $basePath
      * @return mixed|string
      */
-    protected function _addTimestampToUrl($url, $baseUrl, $basePath)
+    protected function _addSignatureToUrl($url, $baseUrl, $basePath)
     {
         $url = $this->_sanitizeUrl($url);
         $baseUrl = $this->_sanitizeUrl($baseUrl);
@@ -88,11 +94,15 @@ class Guidance_Cachebuster_Model_Parser
             return $url;
         }
 
-        $timestamp = filemtime($path);
+        if (is_callable($this->getCallback())) {
+            $signature = call_user_func($this->getCallback(), $path);
+        } else {
+            $signature = filemtime($path);
+        }
 
         $final = array(
             $pathinfo['filename'],
-            $timestamp,
+            $signature,
             $pathinfo['extension'],
         );
 
@@ -193,6 +203,21 @@ class Guidance_Cachebuster_Model_Parser
         }
         $this->_fileExtensions = $extensions;
         return $this;
+    }
+
+    /**
+     * @param callable $callback
+     * @return $this
+     */
+    public function setCallback($callback)
+    {
+        $this->_callback = $callback;
+        return $this;
+    }
+
+    public function getCallback()
+    {
+        return $this->_callback;
     }
 
     /**
