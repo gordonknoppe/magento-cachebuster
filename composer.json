@@ -1,12 +1,12 @@
 {
     "name": "guidance/cachebuster",
     "type": "magento-module",
-    "license":"Apache-2.0",
-    "description":"A Magento module which facilitates automatic purging of static assets from HTTP caches such as browser cache, CDN, Varnish, etc using best practices outlined within the HTML5 boilerplate community.",
-    "authors":[
+    "license": "Apache-2.0",
+    "description": "A Magento module which facilitates automatic purging of static assets from HTTP caches such as browser cache, CDN, Varnish, etc using best practices outlined within the HTML5 boilerplate community.",
+    "authors": [
         {
-            "name":"Gordon Knoppe",
-            "email":"gordon@knoppe.net"
+            "name": "Gordon Knoppe",
+            "email": "gordon@knoppe.net"
         }
     ],
     "require": {
