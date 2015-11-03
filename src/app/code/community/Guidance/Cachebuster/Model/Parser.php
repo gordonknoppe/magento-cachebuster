@@ -8,7 +8,10 @@
 
 class Guidance_Cachebuster_Model_Parser
 {
-    /** @var array  */
+    /**
+     * URL maps cache
+     *
+     * @var array  */
     protected $_maps = array();
 
     /**
@@ -20,6 +23,7 @@ class Guidance_Cachebuster_Model_Parser
 
     /**
      * Guidance_Cachebuster_Model_Parser constructor.
+     * 
      * @param array $config
      */
     public function __construct($config = array())
@@ -149,6 +153,8 @@ class Guidance_Cachebuster_Model_Parser
     }
 
     /**
+     * Add URL and path mapping
+     *
      * @param $url
      * @param $path
      * @return $this
@@ -161,6 +167,8 @@ class Guidance_Cachebuster_Model_Parser
     }
 
     /**
+     * Get configured URL and path mappings
+     *
      * @return array
      */
     public function getMaps()
@@ -169,6 +177,8 @@ class Guidance_Cachebuster_Model_Parser
     }
 
     /**
+     * Get file path from URL based on mapping
+     *
      * @param string $url
      * @return string
      */
@@ -178,6 +188,8 @@ class Guidance_Cachebuster_Model_Parser
     }
 
     /**
+     * Set URL maps
+     *
      * @param array $maps
      * @return $this
      */
@@ -194,6 +206,8 @@ class Guidance_Cachebuster_Model_Parser
     }
 
     /**
+     * Set file extensions for parsing
+     *
      * @param array $extensions
      * @return $this
      */
@@ -207,6 +221,8 @@ class Guidance_Cachebuster_Model_Parser
     }
 
     /**
+     * Get file extensions configured for parsing
+     *
      * @return array
      */
     public function getFileExtensions()
@@ -215,6 +231,8 @@ class Guidance_Cachebuster_Model_Parser
     }
 
     /**
+     * Validate given URL and path for processing
+     *
      * @param string $url
      * @param string $path
      * @return $this
