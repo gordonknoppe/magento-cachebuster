@@ -3,7 +3,7 @@
 /**
  * NOTICE OF LICENSE
  *
- * Copyright 2012 Guidance Solutions
+ * Copyright 2015 Gordon Knoppe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  * @author     Gordon Knoppe
  * @category   Guidance
  * @package    Cachebuster
- * @copyright  Copyright (c) 2012 Guidance Solutions (http://www.guidance.com)
+ * @copyright  Copyright (c) 2015 Gordon Knoppe
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
  -->

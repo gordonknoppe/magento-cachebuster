@@ -11,7 +11,11 @@ class Guidance_Cachebuster_Model_Parser
     /** @var array  */
     protected $_maps = array();
 
-    /** @var array  */
+    /**
+     * File extensions cache
+     *
+     * @var array
+     */
     protected $_fileExtensions = array();
 
     /**
@@ -121,6 +125,8 @@ class Guidance_Cachebuster_Model_Parser
     }
 
     /**
+     * Parse URLs in given string
+     *
      * @param string $html
      * @return array
      */

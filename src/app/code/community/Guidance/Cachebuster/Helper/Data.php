@@ -2,7 +2,7 @@
 /**
  * NOTICE OF LICENSE
  *
- * Copyright 2012 Guidance Solutions
+ * Copyright 2015 Gordon Knoppe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,24 +19,49 @@
  * @author     Gordon Knoppe
  * @category   Guidance
  * @package    Cachebuster
- * @copyright  Copyright (c) 2012 Guidance Solutions (http://www.guidance.com)
+ * @copyright  Copyright (c) 2015 Gordon Knoppe
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
 
 class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
 {
-
+    /**
+     * Configuration path for module status
+     */
     const XML_PATH_IS_ENABLED = 'system/guidance_cachebuster/is_enabled';
+
+    /**
+     * Configuration path for supported file extensions
+     */
     const XML_PATH_FILE_EXTENSIONS = 'system/guidance_cachebuster/file_extensions';
+
+    /**
+     * Configuration path for URL keys
+     */
     const XML_PATH_FILE_URL_KEYS = 'system/guidance_cachebuster/url_keys';
 
-    protected $_fileExtensions;
+    /**
+     * File extensions cache
+     *
+     * @var array
+     */
+    protected $_fileExtensions = array();
 
+    /**
+     * Check if module is enabled
+     *
+     * @return mixed
+     */
     public function isEnabled()
     {
         return Mage::getStoreConfig(self::XML_PATH_IS_ENABLED);
     }
 
+    /**
+     * Get enabled file extensions
+     *
+     * @return array
+     */
     public function enabledFileExtensions()
     {
         if (is_null($this->_fileExtensions)) {
@@ -47,6 +72,8 @@ class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
     }
 
     /**
+     * Get configured string parser instance
+     *
      * @return Guidance_Cachebuster_Model_Parser
      */
     public function getParser()
@@ -72,6 +99,11 @@ class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
         return $parser;
     }
 
+    /**
+     * Get configured URL keys
+     *
+     * @return mixed
+     */
     protected function _getUrlKeys()
     {
         $urls = Mage::getStoreConfig(self::XML_PATH_FILE_URL_KEYS);
