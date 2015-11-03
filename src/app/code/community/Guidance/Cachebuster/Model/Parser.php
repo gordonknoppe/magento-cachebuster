@@ -1,9 +1,9 @@
 <?php
 /**
- * @author      Guidance Magento Team <magento@guidance.com>
+ * @author      Gordon Knoppe <gordon@knoppe.net>
  * @category    Guidance
  * @package     Cachebuster
- * @copyright   Copyright (c) 2013 Guidance Solutions (http://www.guidance.com)
+ * @copyright   Copyright (c) 2015 Gordon Knoppe
  */
 
 class Guidance_Cachebuster_Model_Parser
@@ -14,6 +14,10 @@ class Guidance_Cachebuster_Model_Parser
     /** @var array  */
     protected $_fileExtensions = array();
 
+    /**
+     * Guidance_Cachebuster_Model_Parser constructor.
+     * @param array $config
+     */
     public function __construct($config = array())
     {
         if (isset($config['urlMap'])) {
@@ -28,6 +32,7 @@ class Guidance_Cachebuster_Model_Parser
      * Parse given html
      *
      * @param string $html
+     * @return mixed|string
      */
     public function parseHtml($html = '')
     {
