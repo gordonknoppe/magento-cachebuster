@@ -45,7 +45,7 @@ class Guidance_Cachebuster_Helper_Data extends Mage_Core_Helper_Data
      *
      * @var array
      */
-    protected $_fileExtensions = array();
+    protected $_fileExtensions;
 
     /**
      * Check if module is enabled
