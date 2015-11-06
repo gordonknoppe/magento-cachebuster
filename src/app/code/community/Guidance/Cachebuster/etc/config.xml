@@ -27,7 +27,7 @@
 <config>
     <modules>
         <Guidance_Cachebuster>
-            <codeVersion>1.0.0</codeVersion>
+            <codeVersion>1.0.1</codeVersion>
         </Guidance_Cachebuster>
     </modules>
     <global>
