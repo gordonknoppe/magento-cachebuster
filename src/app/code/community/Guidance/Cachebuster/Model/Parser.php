@@ -49,7 +49,7 @@ class Guidance_Cachebuster_Model_Parser
         // Get urls to add timestamps to by map type
         $urls = $this->_parseUrls($html);
 
-        foreach ($urls as $urlKey => $foundUrls) {
+        foreach ($urls['urls'] as $urlKey => $foundUrls) {
 
             // File system path for urlKey
             $path = $this->getPathByUrl($urlKey);
@@ -69,9 +69,30 @@ class Guidance_Cachebuster_Model_Parser
             }
         }
 
+        foreach ($urls['json_urls'] as $urlKey => $foundUrls) {
+
+            // File system path for urlKey
+            $path = $this->getPathByUrl($urlKey);
+
+            foreach ($foundUrls as $url) {
+                $jsonEncodedUrl = $url['json_url'];
+                // Skip this url if it has already been processed
+                if (isset($processed[$jsonEncodedUrl])) {
+                    continue;
+                }
+
+                $timeStampedUrl = $this->_addTimestampToUrl($url['url'], $urlKey, $path);
+
+                if ($url['url'] != $timeStampedUrl) {
+                    $find[$jsonEncodedUrl] = trim(json_encode($timeStampedUrl), '"') . ($url['has_slash'] ? '\\' : '');
+                    $processed[$jsonEncodedUrl] = true;
+                }
+            }
+        }
+
         // Search and replace html
-        if (count($find)) {
-            $html = str_replace(array_keys($find), array_values($find), $html);
+        if (!empty($find)) {
+            $html = strtr($html, $find);
         }
 
         // Return html
@@ -137,16 +158,32 @@ class Guidance_Cachebuster_Model_Parser
     protected function _parseUrls($html)
     {
         // Urls extracted from html by map type
-        $urls = array();
+        $urls = array(
+            'urls' => array(),
+            'json_urls' => array()
+        );
 
         foreach (array_keys($this->getMaps()) as $url) {
             $matches = array();
-            $regex = "|${url}[^\"\'\s]*|";
-
+            $regex = "~".preg_quote($url, '~')."[^\"\'\s]*~";
             preg_match_all($regex, $html, $matches);
 
             if (isset($matches[0]) && is_array($matches[0]) && count($matches[0])) {
-                $urls[$url] = $matches[0];
+                $urls['urls'][$url] = $matches[0];
+            }
+
+            $jsonEncodedUrl = trim(json_encode($url), '"');
+            $regex = "~".preg_quote($jsonEncodedUrl, '~')."[^\"\'\s]*~";
+            preg_match_all($regex, $html, $matches);
+
+            if (isset($matches[0]) && is_array($matches[0]) && count($matches[0])) {
+                foreach ($matches[0] as &$matchedUrl) {
+                    $urls['json_urls'][$url][] = array(
+                        'url' => json_decode('"' . rtrim($matchedUrl, '\\') . '"'),
+                        'has_slash' => substr($matchedUrl, -1) == '\\',
+                        'json_url' => $matchedUrl
+                    );
+                }
             }
         }
         return $urls;
