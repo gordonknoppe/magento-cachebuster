@@ -34,7 +34,9 @@ The module provides cachebusting by automatically altering the URI created by Ma
 
 ## Configuration
 
-This module is configured via the "System" configuration section under the group "Cachebuster Settings".
+This module is configured via the "System" configuration section:
+
+    System -> Configuration -> Advanced -> System -> Cachebuster Settings
 
 * **Enable cachebuster**
   * Enables the module behavior which rewrites URLs on the frontend.  It is important that your mod_rewrite rules are configured before enabling this setting.
